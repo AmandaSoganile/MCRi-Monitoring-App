@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SingleStudentView: View {
-//    @State var  student: User
+//    @State var  student: User.
    
     var body: some View {
         TabView{

@@ -14,18 +14,15 @@ struct PerformaceCriteria: Identifiable{
 }
 struct EditView: View {
     @State private var criteria: [PerformaceCriteria] = []
+    @State  var savedActivities: [[PerformaceCriteria]] = [ ]
+    var onSave: (([PerformaceCriteria]) -> Void)? = nil
+   
     var userType: UserType
     var body: some View {
         NavigationStack{
             List{
-                HStack{
-                    Text("Activities")
-                        .font(.headline)
-                    Spacer()
-                    Text("Completed")
-                        .font(.headline)
-                }
-                
+               
+            
                 ForEach($criteria){$item in
                     HStack{
                         Text(item.activity)
@@ -47,16 +44,33 @@ struct EditView: View {
                     criteria = getCriteria(criteria: userType)
                 }
             }
-            Text("Save")
-                .font(.headline)
-                .foregroundStyle(.white)
-                .padding()
-                .frame(width: 150)
-                .background(
-                    RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .fill(Color.blue)
-                )
-//                .navigationTitle(student.name)
+            Button{
+                guard !criteria.isEmpty else{return}
+                onSave?(criteria)
+                
+            }label: {
+                Text("Save")
+                    .font(.headline)
+                    .foregroundStyle(.white)
+                    .frame(width: 200, height: 50)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            .fill(Color.blue)
+                    )
+            }
+            
+            
+            
+                .navigationTitle("Activities")
+                .toolbar{
+                    ToolbarItem(placement: .topBarTrailing){
+                        Button(action: {
+                            
+                        }, label: {
+                            Image(systemName: "plus")
+                        })
+                    }
+                }
         }
     }
 }
