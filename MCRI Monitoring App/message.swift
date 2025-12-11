@@ -14,7 +14,7 @@ struct message: View {
                 Text("A simple way to record, monitor, and resolve matters for better organization and outcomes.")
                     .fontWeight(.heavy)
                 Spacer()
-                NavigationLink("Start"){logIn()
+                NavigationLink("Start"){LoginView()
                     
                 }
                 .padding()
