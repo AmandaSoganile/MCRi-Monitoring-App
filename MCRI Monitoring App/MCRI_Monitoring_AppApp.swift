@@ -11,7 +11,7 @@ import SwiftUI
 struct MCRI_Monitoring_AppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+           PickWeekManager()
         }
     }
 }

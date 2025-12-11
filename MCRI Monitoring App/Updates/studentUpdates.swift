@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StudentUpdateFilIIn: View {
+struct studentUpdates: View {
     @State private var attendance: String = ""
     @State private var selectedBook = ""
     @State private var chapter: Int = 0
@@ -20,9 +20,9 @@ struct StudentUpdateFilIIn: View {
     let chapters = [1, 2, 3, 4, 5, 6]
     let units = [1, 2, 3, 4, 5, 6, 7]
     
-    
-    
     var books: [String] = ["Swift Explorations", "Swift Fundamentals"]
+    
+    var user: User
     
     var body: some View {
         NavigationStack{
@@ -129,8 +129,10 @@ struct StudentUpdateFilIIn: View {
                 }
             }
             Button(action: {
-                print("Saved!")
-            }) {
+                let studentReport = StudentUpdate(user: user, weekEnding: selectedWeek, attendance: Int(attendance) ?? 5, bookProgress: bookProgress(book: selectedBook, chapter: chapter, unit: unit), boldVoiceScore: Int(bVScore) ?? 50, studentAchievement: studAchievement, additionalHelp: blocker)
+                studentReports.append(studentReport)
+            })
+            {
                 ZStack{
                     RoundedRectangle(cornerRadius: 10)
                         .frame(width: 360, height: 70)
@@ -151,5 +153,5 @@ struct StudentUpdateFilIIn: View {
 }
 
 #Preview {
-    StudentUpdateFilIIn()
+    studentUpdates(user: User(name: "AMA", password: "123", emailAdress: "123@GMAIL", type: .student))
 }

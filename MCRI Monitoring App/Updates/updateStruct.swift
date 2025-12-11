@@ -27,3 +27,33 @@ struct StudentUpdate{
     var studentAchievement: String
     var additionalHelp: String
 }
+
+
+
+struct ManagerWeeklyUpdate: Identifiable, Codable {
+    let id = UUID()
+    
+    // Attendance
+    var weekEnding: Date
+    var absentee: String
+    var latecomer: String
+    
+    // Book Progress
+    var studentsOnExplorations: Int
+    var studentsOnFundamentals: Int
+    
+    // BoldVoice
+    var boldVoiceScore: String
+    
+    // Additional Information
+    var studentAchievements: String
+    var milestonesCovered: String
+    var goalsForWeek: String
+    
+    // Events
+    var upcomingEvents: String
+}
+
+var managerReports: [ManagerWeeklyUpdate] = []
+var studentReports: [StudentUpdate] = []
+

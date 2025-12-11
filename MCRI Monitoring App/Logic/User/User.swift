@@ -11,6 +11,7 @@ struct User: Equatable {
     var emailAdress: String
     var type: UserType
     
+    
     init(name: String, password: String, emailAdress: String, type: UserType) {
         self.name = name
         self.password = password

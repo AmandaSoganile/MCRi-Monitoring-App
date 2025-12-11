@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct PickStudentView: View {
+    var update =  StudentUpdate(user: User(name: "Amanda", password: "ama@123", emailAdress: "Aama@gmail.com", type: .student), weekEnding: Date.now, attendance: 10, bookProgress: bookProgress(book: "Fundamentals", chapter: 4, unit: 2), boldVoiceScore: 45, studentAchievement: "n/a", additionalHelp: "")
+    
     @State private var selectedUser : User? = nil
   
     var body: some View {
@@ -28,7 +30,7 @@ struct PickStudentView: View {
                         Color.black.opacity(0.001)
                             .ignoresSafeArea()
                             .transition(.opacity)
-                        UpdateCard(user: user)
+                        UpdateCard(user: user, update: update)
                             .background(.ultraThinMaterial)
                             .cornerRadius(20)
                             .padding()

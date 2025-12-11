@@ -20,7 +20,7 @@ struct PickWeekManager: View {
                     HorizontalWeekView(week: week)
                 }
             }
-            .listStyle(.plain)
+            .listStyle(.inset)
                 
                 
             }

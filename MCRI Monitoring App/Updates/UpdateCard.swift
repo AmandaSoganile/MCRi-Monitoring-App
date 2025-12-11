@@ -9,27 +9,38 @@ import SwiftUI
 
 struct UpdateCard: View {
     var user: User
-//    var update: StudentUpdate
+    let update: StudentUpdate
     
     var body: some View {
         VStack{
+            
             Text(user.name)
                 .font(.largeTitle)
                 .fontWeight(.semibold)
             
             HStack{
+                Text("Week Ending: ")
+                    .fontWeight(.bold)
+                Spacer()
+                Text(update.weekEnding, style: .date)
+            }
+            .padding()
+            
+            HStack{
                 Text("Attendance: ")
                     .fontWeight(.bold)
                 Spacer()
-                Text("5 days")
+                Text(String(update.attendance))
             }
             .padding()
+            
+           
             
             HStack{
                 Text("Book Progress:")
                     .fontWeight(.bold)
                 Spacer()
-                Text("Swift Fundamentals - Ch.2- Unit 3")
+                Text(update.bookProgress.description)
             }
             .padding()
             
@@ -37,7 +48,7 @@ struct UpdateCard: View {
                 Text("BoldVoice Score:")
                     .fontWeight(.bold)
                 Spacer()
-                Text("89%")
+                Text(String(update.boldVoiceScore))
             }
             .padding()
             
@@ -45,7 +56,7 @@ struct UpdateCard: View {
                 Text("Student Achievement:")
                     .fontWeight(.bold)
                 Spacer()
-                Text("Passed first exam")
+                Text(update.studentAchievement)
             }
             .padding()
             
@@ -53,7 +64,7 @@ struct UpdateCard: View {
                 Text("Additional Help Needed:")
                     .fontWeight(.bold)
                 Spacer()
-                Text("LinkedIn Account requires renewing")
+                Text(update.additionalHelp)
             }
             .padding()
         }
@@ -61,7 +72,26 @@ struct UpdateCard: View {
 }
 
 #Preview {
-    UpdateCard(user: User(name: "Amanda", password: "", emailAdress: "ama", type: .student),
-//    update: StudentUpdate(user: User(name: "Amanda", password: "", emailAdress: "ama", type: .student), weekEnding: Date(), attendance: 4, bookProgress: bookProgress(book: "Swift", chapter: 1, unit: 1), boldVoiceScore: 23, studentAchievement: "", additionalHelp: "")
+    UpdateCard(
+        user: User(
+            name: "Amanda",
+            password: "",
+            emailAdress: "ama",
+            type: .student
+        ),
+        update: StudentUpdate(
+            user: User(
+                name: "Amanda",
+                password: "",
+                emailAdress: "ama",
+                type: .student
+            ),
+            weekEnding: Date(),
+            attendance: 17,
+            bookProgress: bookProgress(book: "Swift Explorations", chapter: 3, unit: 2),
+            boldVoiceScore: 89,
+            studentAchievement: "Completed first exam with high marks.",
+            additionalHelp: "Needs support with Unit 3 reading tasks."
+        )
     )
 }

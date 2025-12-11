@@ -17,6 +17,7 @@ struct HorizontalWeekView: View {
             
             Text("Week ending: \(week)")
                 .font(.title2)
+                .fontWeight(.semibold)
         }
     }
 }
