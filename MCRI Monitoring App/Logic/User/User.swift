@@ -48,102 +48,109 @@ var users: [User] = [
     User(name: "company", password: "admin", emailAddress: "comp@example.com", type: .company),
     User(name: "Donor", password: "admin", emailAddress: "don@example.com", type: .donor),
 ]
-struct LoginView: View {
+
+struct SignInView: View {
     @State private var selectedUserType: UserType = .student
     @State private var email = ""
     @State private var password = ""
-    @State private var loginMessage = ""
-    @State private var loggedInUser: User?
-    
+    @State private var errorMessage = ""
+    @State private var navigate = false
+
     var body: some View {
-       // NavigationStack{
-        VStack(spacing: 20) {
-            Spacer()
-            Text("Matter App Login")
-                .font(.largeTitle)
-                .bold()
-            
-            Picker("Select User Type", selection: $selectedUserType) {
-                ForEach(UserType.allCases) { type in
-                    Text(type.rawValue.capitalized).tag(type)
+        NavigationStack {
+            VStack(spacing: 20) {
+                
+                // Hidden NavigationLink
+                NavigationLink("", destination: LoginView(), isActive: $navigate)
+                    .hidden()
+
+                Text("Matter")
+                    .font(.largeTitle)
+                    .bold()
+
+                Text("Sign in to continue")
+                    .foregroundColor(.gray)
+
+                // User type dropdown
+                Picker("Select User Type", selection: $selectedUserType) {
+                    ForEach(UserType.allCases, id: \.self) { type in
+                        Text(type.rawValue.capitalized).tag(type)
+                    }
                 }
+                .pickerStyle(.menu)
+                .padding()
+                .background(Color.blue.opacity(0.15))
+                .cornerRadius(10)
+
+                TextField("Email", text: $email)
+                    .keyboardType(.emailAddress)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled(true)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                // Password
+                SecureField("Password", text: $password)
+                    .textFieldStyle(.roundedBorder)
+
+                // Error
+                if !errorMessage.isEmpty {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                }
+
+                // Sign In Button
+                Button(action: signIn) {
+                    Text("Sign In")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(formIsValid ? Color.blue : Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
+                }
+                .disabled(!formIsValid)
+
+                Spacer()
             }
-            .pickerStyle(MenuPickerStyle())
             .padding()
-            .background(Color.blue.opacity(0.2))
-            .cornerRadius(10)
-            
-            TextField("Email", text: $email)
-                .keyboardType(.emailAddress)
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled(true)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-            
-            SecureField("Password", text: $password)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-            
-            Button(action: {
-                login()
-            }) {
-                Text("Login")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
-            
-            if !loginMessage.isEmpty {
-                Text(loginMessage)
-                    .foregroundColor(.red)
-                    .padding(.top, 10)
-            }
-            
-            // Display info when logged in
-            if let user = loggedInUser {
-                VStack(spacing: 10) {
-                    Text("Welcome, \(user.name)!")
-                        .font(.headline)
-                    
-                }
-                .padding(.top, 20)
-            }
-            
-            Spacer()
         }
-        .padding()
     }
-    
-    //  Login Function
-    func login() {
-        // check if email exists in the array
-        guard let matchedUser = users.first(where: { $0.emailAddress == email }) else {
-            loginMessage = "Login failed. Email not found."
-            loggedInUser = nil
-            return
+
+    // FORM VALIDATION
+    var formIsValid: Bool {
+        // Find user that matches email + selected role
+        guard let user = users.first(where: {
+            $0.emailAddress == email && $0.type == selectedUserType
+        }) else {
+            return false
         }
 
-        // Check if selected user type matches the actual type
-        guard matchedUser.type == selectedUserType else {
-            loginMessage = "Login failed. Selected user type does not match the email."
-            loggedInUser = nil
+        // Password must be AT LEAST the required length
+        return password.count >= user.password.count
+    }
+
+
+
+    // SIGN IN
+    func signIn() {
+        // Look for user with matching email & type
+        guard let user = users.first(where: {
+            $0.emailAddress == email && $0.type == selectedUserType
+        }) else {
+            errorMessage = "Email does not match selected user type."
             return
         }
 
         // Check password
-        guard matchedUser.password == password else {
-            loginMessage = "Login failed. Incorrect password."
-            loggedInUser = nil
+        guard user.password == password else {
+            errorMessage = "Incorrect password."
             return
         }
 
-        // All checks passed
-        loggedInUser = matchedUser
-        loginMessage = ""
+        errorMessage = ""
+        navigate = true
     }
-
 }
 
-#Preview{
-    LoginView()
+#Preview {
+   SignInView()
 }
+

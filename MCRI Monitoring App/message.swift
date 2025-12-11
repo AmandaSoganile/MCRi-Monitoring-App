@@ -12,13 +12,16 @@ struct message: View {
             VStack{
                 Spacer()
                 Text("A simple way to record, monitor, and resolve matters for better organization and outcomes.")
-                    .fontWeight(.heavy)
+                    .font(.title2)
+                    .padding()
+                    .multilineTextAlignment(.center)
                 Spacer()
-                NavigationLink("Start"){LoginView()
+                NavigationLink("Continue"){
                     
                 }
                 .padding()
-                .foregroundStyle(.black)
+                .frame(width: 300)
+                .foregroundStyle(.white)
                 .fontWeight(.bold)
                 .background(Capsule().fill(Color.blue))
             }

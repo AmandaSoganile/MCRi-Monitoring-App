@@ -12,14 +12,21 @@ struct Welcome: View {
         NavigationStack{
             VStack{
                 Spacer()
-                Text("LOGO")
+                Image("matter")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 600, height: 600)
                 Spacer()
-                NavigationLink("Next"){message()
+                NavigationLink("Next"){SignInView()
                 }
                 .padding()
-                .foregroundStyle(.black)
-                .fontWeight(.bold)
+                .frame(width: 200)
+                .foregroundStyle(.white)
+                .font(.largeTitle)
                 .background(Capsule().fill(Color.blue))
+                .cornerRadius(200)
+                
+                
             }
         }
     }
