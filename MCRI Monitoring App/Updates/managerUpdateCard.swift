@@ -50,7 +50,7 @@ struct managerUpdateCard: View {
             .padding()
             
             HStack{
-                Text("Students on Explorations:")
+                Text("Students on Fundamentals:")
                     .fontWeight(.bold)
                 Spacer()
                 Text(String(report.studentsOnFundamentals))
