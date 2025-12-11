@@ -11,11 +11,11 @@ struct User {
     var emailAdress: String
     var type: UserType
     
-    init(name: String, password: String, emailAdress: String, ) {
+    init(name: String, password: String, emailAdress: String, type: UserType) {
         self.name = name
         self.password = password
         self.emailAdress = emailAdress
-        self.type = .student
+        self.type = type
     }
 }
 
@@ -24,7 +24,7 @@ enum AccessLevel {
 }
 
 enum UserType {
-    case student, intern, facilitator, manager, projectManager, donors, company
+    case student, intern, facilitator, manager, projectManager, donor, company
     
     var level: AccessLevel {
         switch self {
@@ -32,10 +32,14 @@ enum UserType {
             return .minimum
         case .facilitator, .manager, .projectManager:
             return .manager
-        case .donors, .company:
+        case .donor, .company:
             return .outsider
         }
     }
 }
 
-
+var users: [User] = [
+    User(name: "Intern", password: "admin", emailAdress: "intern@example.com", type: .intern),
+    User(name: "Facilitator", password: "admin", emailAdress: "facilitator@example.com", type: .facilitator),
+    User(name: "Donor", password: "admin", emailAdress: "manager@example.com", type: .donor),
+]
