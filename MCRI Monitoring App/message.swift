@@ -1,30 +1,32 @@
 //
-//  ContentView.swift
+//  message.swift
 //  MCRI Monitoring App
 //
-//  Created by Amanda Soganile on 11/12/2025.
+//  Created by Tana on 11/12/2025.
 //
-
 import SwiftUI
 
-struct Welcome: View {
+struct message: View {
     var body: some View {
         NavigationStack{
             VStack{
                 Spacer()
-                Text("LOGO")
+                Text("A simple way to record, monitor, and resolve matters for better organization and outcomes.")
+                    .fontWeight(.heavy)
                 Spacer()
-                NavigationLink("Next"){message()
+                NavigationLink("Start"){logIn()
+                    
                 }
                 .padding()
                 .foregroundStyle(.black)
                 .fontWeight(.bold)
                 .background(Capsule().fill(Color.blue))
             }
+            }
         }
     }
-}
+
 
 #Preview {
-    Welcome()
+    message()
 }
