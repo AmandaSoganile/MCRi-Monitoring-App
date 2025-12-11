@@ -8,14 +8,21 @@
 import SwiftUI
 
 struct PickWeekManager: View {
-    var weeks = ["Week ending ..1", "Week ending ..2", "Week ending ..3", "Week ending ..4"]
+    var weeks = ["12/06/25", "22/06/25", "02/07/25", "13/07/25"]
     var body: some View {
         NavigationStack{
             Text("Pick your week")
                 .font(.largeTitle)
                 .fontWeight(.bold)
             
-        }
+            List(weeks, id: \.self) { week in
+                NavigationLink(destination: PickStudentView()) {
+                    HorizontalWeekView(week: week)
+                }
+            }
+                
+                
+            }
     }
 }
 

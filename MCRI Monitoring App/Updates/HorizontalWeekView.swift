@@ -13,7 +13,7 @@ struct HorizontalWeekView: View {
         ZStack{
             RoundedRectangle(cornerRadius: 20)
                 .frame(width: 350, height: 170)
-                .foregroundStyle(Color.gray.opacity(0.2))
+                .foregroundStyle(Color.white)
             
             Text("Week ending: \(week)")
                 .font(.title2)
