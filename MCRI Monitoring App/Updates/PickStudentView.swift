@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PickStudentView: View {
-    
+    @State private var selectedUser : User? = nil
     
     var body: some View {
         List {
@@ -17,11 +17,30 @@ struct PickStudentView: View {
                     Section(header: Text(cohortKey).font(.headline)) {
                         ForEach(users, id: \.name) { user in
                             Text(user.name)
+                                .onTapGesture {
+                                    selectedUser = user
+                                }
                         }
+                    }
+                    .blur(radius: selectedUser != nil ? 10 : 0)
+                    
+                    if let user = selectedUser {
+                        Color.black.opacity(0.4)
+                            .ignoresSafeArea()
+                            .transition(.opacity)
+                        updateCard(user: user)
+                            .background(.ultraThinMaterial)
+                            .cornerRadius(20)
+                            .padding()
+                            .shadow(radius: 10)
+                            .onTapGesture {
+                                selectedUser = nil
+                            }
                     }
                 }
             }
         }
+        .animation(.easeInOut, value: selectedUser)
     }
 }
 

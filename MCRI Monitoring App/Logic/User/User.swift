@@ -5,7 +5,7 @@
 //  Created by Ron Harifiyati on 11/12/2025.
 //
 
-struct User {
+struct User: Equatable {
     var name: String
     var password: String
     var emailAdress: String
@@ -18,6 +18,9 @@ struct User {
         self.type = type
     }
 }
+
+// Equatable conformance is synthesized automatically since all properties are Equatable.
+// No further implementation needed.
 
 enum AccessLevel {
     case minimum, manager, outsider
