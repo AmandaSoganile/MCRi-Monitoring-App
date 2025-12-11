@@ -9,11 +9,9 @@ import SwiftUI
 
 struct RequestMessage {
     let sender: User
-    let recipientType: UserType
+    let recipientType: User
     var message: String
-    var replies: String
 }
-
 
 struct ChatMessage: Identifiable {
     let id = UUID()
@@ -23,11 +21,17 @@ struct ChatMessage: Identifiable {
 
 
 struct Chattingview: View {
-    @State private var messages: [ChatMessage] = [ChatMessage(text: "", isUser: false)]
+    @State private var messages: [ChatMessage] = []
     @State private var message = ""
     @State private var recipient: String = ""
+    @State private var hasSent: Bool = false
     var body: some View {
         VStack {
+            Image(systemName: "person.spatialaudio.3d.fill")
+                .fontWeight(.bold)
+                .font(.largeTitle)
+                .foregroundStyle(.cyan)
+                .padding(20)
             ScrollViewReader { proxy in
                 ScrollView {
                     VStack(alignment: .leading, spacing: 12) {
@@ -58,7 +62,7 @@ struct Chattingview: View {
             HStack {
                 TextField("Type a message...", text: $message)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                
+                    
                 Button(action: sendMessage) {
                     Image(systemName: "paperplane.fill")
                         .font(.system(size: 20))
