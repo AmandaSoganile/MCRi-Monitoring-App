@@ -13,7 +13,7 @@ struct bookProgress: Codable {
     var unit: Int
     
     var description : String {
-        return "\(book), Chapter: \(chapter), Unit: \(unit)"
+        return "\(book) Chapter: \(chapter) Unit: \(unit)"
     }
     
 }

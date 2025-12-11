@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PickStudentView: View {
-    var update =  StudentUpdate(user: User(name: "Amanda", password: "ama@123", emailAdress: "Aama@gmail.com", type: .student), weekEnding: Date.now, attendance: 10, bookProgress: bookProgress(book: "Fundamentals", chapter: 4, unit: 2), boldVoiceScore: 45, studentAchievement: "n/a", additionalHelp: "")
+    var update =  StudentUpdate(user: User(name: "Amanda", password: "ama@123", emailAdress: "Ama@gmail.com", type: .student), weekEnding: Date.now, attendance: 10, bookProgress: bookProgress(book: "Fundamentals", chapter: 4, unit: 2), boldVoiceScore: 45, studentAchievement: "N/A", additionalHelp: "N/A")
     
     @State private var selectedUser : User? = nil
   
@@ -27,9 +27,9 @@ struct PickStudentView: View {
                     .blur(radius: selectedUser != nil ? 10 : 0)
                     
                     if let user = selectedUser {
-                        Color.black.opacity(0.001)
-                            .ignoresSafeArea()
-                            .transition(.opacity)
+//                        Color.black.opacity(0.001)
+//                            .ignoresSafeArea()
+//                            .transition(.opacity)
                         UpdateCard(user: user, update: update)
                             .background(.ultraThinMaterial)
                             .cornerRadius(20)

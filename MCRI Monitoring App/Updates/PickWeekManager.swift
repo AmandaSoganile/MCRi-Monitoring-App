@@ -11,7 +11,7 @@ struct PickWeekManager: View {
     var weeks = ["12/06/25", "22/06/25", "02/07/25", "13/07/25"]
     var body: some View {
         NavigationStack{
-            Text("Pick your week")
+            Text(" All Updates")
                 .font(.largeTitle)
                 .fontWeight(.bold)
             
@@ -22,8 +22,9 @@ struct PickWeekManager: View {
             }
             .listStyle(.inset)
                 
-                
+
             }
+        .navigationTitle("All Updates")
     }
 }
 
