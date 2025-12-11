@@ -11,8 +11,8 @@ struct profileView: View {
     @State private var name: String = "Amanda Soganile"
     @State private var email: String = "amanda@gmail.com"
     @State private var userType: String = "Standard User"
-    @State private var bio: String = "This is a short bio."
-    @State private var location: String = "Vic Falls, USA"
+    @State private var bio: String = "This is a short info area."
+    @State private var location: String = "Vic Falls, Zim"
     
     var body: some View {
         ScrollView {
@@ -28,40 +28,50 @@ struct profileView: View {
                         }
                         .padding(.top, 20)
 
-                        
-                        TextField("Name", text: $name)
-                            .padding()
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(8)
-
-                        
-                        TextField("Email", text: $email)
-                            .padding()
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(8)
-
-                        
-                        Picker("User Type", selection: $userType) {
-                            Text("Intern")
-                            Text("Student")
-                            Text("Facilitator")
+                        VStack(alignment: .leading){
+                            Text("Name:")
+                            TextField("Name", text: $name)
+                                .padding()
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(8)
                         }
-                        .pickerStyle(.palette)
-                        .padding(.vertical)
-
                         
-                        TextField("Bio", text: $bio)
-                            .padding()
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(8)
 
-                      
-                        TextField("Location", text: $location)
-                            .padding()
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(8)
-
-                        // Save Button
+                        VStack(alignment: .leading){
+                            Text("Email:")
+                            TextField("Email", text: $email)
+                                .padding()
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(8)
+                        }
+                        VStack(alignment: .leading){
+                            Text("Role:")
+                            Picker("User Type", selection: $userType) {
+                                Text("Intern")
+                                Text("Student")
+                                Text("Facilitator")
+                            }
+                            .pickerStyle(.palette)
+                            .padding(.vertical)
+                        }
+                        
+                        VStack(alignment: .leading){
+                            Text("More Info:")
+                            TextField("Bio", text: $bio)
+                                .padding()
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(8)
+                            
+                        }
+                        
+                        VStack(alignment: .leading){
+                            Text("Location:")
+                            TextField("Location", text: $location)
+                                .padding()
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(8)
+                        }
+                       
                         Button(action: {
                             print("Profile saved")
                         }) {
@@ -69,7 +79,7 @@ struct profileView: View {
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity)
                                 .padding()
-                                .background(Color.blue)
+                                .background(Color.black)
                                 .cornerRadius(8)
                         }
                         .padding(.top, 20)
