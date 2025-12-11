@@ -1,5 +1,5 @@
 //
-//  updateCard.swift
+//  UpdateCard.swift
 //  MCRI Monitoring App
 //
 //  Created by Amanda Soganile on 11/12/2025.
@@ -7,8 +7,10 @@
 
 import SwiftUI
 
-struct updateCard: View {
+struct UpdateCard: View {
     var user: User
+//    var update: StudentUpdate
+    
     var body: some View {
         VStack{
             Text(user.name)
@@ -59,5 +61,7 @@ struct updateCard: View {
 }
 
 #Preview {
-    updateCard(user: User(name: "Amanda", password: "", emailAdress: "ama", type: .student))
+    UpdateCard(user: User(name: "Amanda", password: "", emailAdress: "ama", type: .student),
+//    update: StudentUpdate(user: User(name: "Amanda", password: "", emailAdress: "ama", type: .student), weekEnding: Date(), attendance: 4, bookProgress: bookProgress(book: "Swift", chapter: 1, unit: 1), boldVoiceScore: 23, studentAchievement: "", additionalHelp: "")
+    )
 }
