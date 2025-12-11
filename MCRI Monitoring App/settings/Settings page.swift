@@ -18,9 +18,7 @@ struct Settings_page: View {
     @State private var isTapped: Bool = false
     @State private var isDarkModeEnabled: Bool = false
     @State private var name: String = ""
-    @State private var showAlert: Bool = false
-    @State private var alertTitle: String = "Are you want to Delete your Account?"
-    @State private var alertMessage: String = ""
+    @State private var shouldDelete: Bool = false
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
         
@@ -77,17 +75,27 @@ struct Settings_page: View {
                         
                         HStack {
                             Image(systemName: "trash.fill")
-                            Text("Delete My Account")
+                                .foregroundStyle(.red)
+                            Button("Delete My Account") {
+                                shouldDelete.toggle()
+                            }
+                            .alert(isPresented: $shouldDelete) {
+                                Alert(
+                                    title: Text("Delete Account"),
+                                    message: Text("Are you sure you want to delete your account?"),
+                                    primaryButton: .destructive(Text("Delete")) {
+                                    },
+                                    secondaryButton: .cancel()
+                                )
+                            }
+                            .foregroundStyle(.red)
                         }
-                        .foregroundStyle(.red)
                     }
                 }
             }
         }
     }
-    func attemptDeletingAccount() {
-        
-    }
+   
 }
 
 #Preview {

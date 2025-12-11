@@ -9,7 +9,14 @@ import SwiftUI
 
 struct AboutTheApp: View {
     var body: some View {
-        Text("")
+        VStack{
+            Text("About The App")
+                .font(.largeTitle)
+                .padding()
+            Spacer()
+            
+            
+        }
     }
 }
 
