@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-  var body: some View {
-           
-       }
+    @EnvironmentObject var settings: AppSettings
+    var body: some View {
+        Text("Hello")
+            .padding()
+    }
 }
 
 #Preview {

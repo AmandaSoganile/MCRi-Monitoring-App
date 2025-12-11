@@ -6,14 +6,22 @@
 //
 
 import SwiftUI
+import Combine
+
+class AppSettings: ObservableObject {
+    @Published var isDarkModeEnabled: Bool = false
+    
+}
 
 struct Settings_page: View {
     @State private var isEnabled: Bool = true
     @State private var isTapped: Bool = false
+    @State private var isDarkModeEnabled: Bool = false
     @State private var name: String = ""
     @State private var showAlert: Bool = false
     @State private var alertTitle: String = "Are you want to Delete your Account?"
     @State private var alertMessage: String = ""
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         
         VStack {
@@ -55,7 +63,7 @@ struct Settings_page: View {
                         }
                         HStack {
                             Image(systemName: "moon.circle")
-                            Toggle("Dark Mode", isOn: $isEnabled)
+                            Toggle("Dark Mode", isOn: $isDarkModeEnabled)
                         }
                     }
                     Section("Help") {
