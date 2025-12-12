@@ -23,7 +23,7 @@ enum AccessLevel {
     case minimum, manager, outsider
 }
 
-enum UserType {
+enum UserType: String, CaseIterable, Codable{
     case student, intern, facilitator, manager, projectManager, donor, company
     
     var level: AccessLevel {

@@ -7,42 +7,81 @@
 
 import SwiftUI
 
-enum Urgency{
-    case low, medium, high
-    
+struct Message: Identifiable {
+    let id = UUID()
+    let sender: UserType
+    let receiver: UserType
+    let title: String
+    let description: String
 }
 
-struct requests: View {
+struct Requests: View {
     @State private var titleOfIssue: String = ""
     @State private var descriptionOfIssue: String = ""
     @State private var submitted: Bool = false
-  
+    @State private var permissionDenied: Bool = false
+    @AppStorage("currentUserRole") private var currentUserRole: String = UserType.facilitator.rawValue
+    
+    @State private var receiver: UserType = .facilitator
+    
+    @State private var messages: [Message] = []
+
+    static let permissions: [UserType: [UserType]] = [
+        .student: [.facilitator, .intern],
+        .intern: [.facilitator, .manager],
+        .facilitator: [.manager, .company, .donor, .projectManager]
+    ]
+
+    var sender: UserType {
+        UserType(rawValue: currentUserRole) ?? .student
+    }
+
     var body: some View {
-        
-        VStack{
-            
+        VStack {
             Form {
+                Section(header: Text("Logged in: \(sender.rawValue.capitalized)")) {}
                 
-                Section(header: Text("Request  Help").font(.largeTitle.bold())){
-                    TextField("Issue...",text: $titleOfIssue)
-                        .font(.title2)
+                Section(header: Text("Request Help").font(.largeTitle.bold())) {
+                    TextField("Issue...", text: $titleOfIssue)
                 }
-            
-                Section(){
-                    TextField("Description...",text: $descriptionOfIssue)
-                        
+                
+                Section {
+                    TextField("Description...", text: $descriptionOfIssue)
                 }
-                Button("Submit"){
-                    submitted.toggle()
+
+                Button("Submit") {
+                    sendMessage()
                 }
-                .alert(isPresented: $submitted){
-                    Alert(title: Text("Thank you for your help!"))
-                }
+                .disabled(!canSendMessage(from: sender, to: receiver)) // prevent button tap
+                
             }
+        }
+        .alert("Submitted!", isPresented: $submitted) { }
+        .alert("Permission Denied", isPresented: $permissionDenied) { }
+    }
+   
+
+    func canSendMessage(from sender: UserType, to receiver: UserType) -> Bool {
+        Requests.permissions[sender]?.contains(receiver) ?? false
+    }
+
+    func sendMessage() {
+        if canSendMessage(from: sender, to: receiver) {
+            let newMessage = Message(
+                sender: sender,
+                receiver: receiver,
+                title: titleOfIssue,
+                description: descriptionOfIssue
+            )
+            
+            messages.append(newMessage)
+            submitted = true
+        } else {
+            permissionDenied = true
         }
     }
 }
 
 #Preview {
-    requests()
+    Requests()
 }
