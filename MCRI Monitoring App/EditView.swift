@@ -13,6 +13,9 @@ struct PerformaceCriteria: Identifiable{
     
 }
 struct EditView: View {
+    
+    @State private var showingNotice: Bool = false
+    @State private var newActivity: String = ""
     @Binding var user: User
     @State private var criteria: [PerformaceCriteria] = []
 
@@ -45,10 +48,34 @@ struct EditView: View {
             )
             .padding(.bottom)
         }
+        .alert("Enter activity", isPresented: $showingNotice) {
+                   TextField("Activity", text: $newActivity)
+                   Button("Cancel", role: .cancel) { newActivity = "" }
+                   Button("Add") { submit() }
+               } message: {
+                   Text("Add a new activity to the list.")
+               }
         .navigationTitle("Activities")
+        .toolbar{
+            ToolbarItem(placement: .topBarTrailing){
+                Button {
+                    showingNotice = true
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+           
+        }
         .onAppear {
             criteria = user.criteria
         }
+    }
+    
+    private func submit() {
+        let trimmed = newActivity.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        criteria.append(PerformaceCriteria(activity: trimmed))
+        newActivity = ""
     }
 }
 
