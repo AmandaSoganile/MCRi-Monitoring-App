@@ -8,27 +8,43 @@
 import SwiftUI
 
 struct SingleStudentView: View {
-//    @State var  student: User.
-   
+    @State var student: User
+    
+
     var body: some View {
-        TabView{
-            SeeOnlyView()
-                .tabItem{
-                    Text("View")
+        NavigationStack{
+            if AccessLevel.manager == .manager {
+                List {
+                    NavigationLink("Edit Activities") {
+                        EditView(user: $student)
+                    }
+                    
+                    NavigationLink("See Only") {
+                        SeeOnlyView(student: student)
+                    }
                 }
-            
-            EditView(userType: .intern)
-                .tabItem{
-                    Text("Edit")
-                        .font(.system(size: 20, weight: .bold))
-                        
+                .navigationTitle(student.name)
+            }else if AccessLevel.outsider == .outsider {
+                List {
+                    NavigationLink("See Only") {
+                        SeeOnlyView(student: student)
+                    }
                 }
+                .navigationTitle(student.name)
+            }
             
         }
-       
     }
 }
 
 #Preview {
-    SingleStudentView()
+    SingleStudentView(
+        student: User(
+            name: "Preview Student",
+            password: "pass",
+            emailAdress: "test@example.com",
+            type: .student
+        )
+    )
 }
+

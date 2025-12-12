@@ -13,20 +13,20 @@ struct StudentPerfrmanceView: View {
     let cohortName: String
     let students: [User]
     
- 
     var body: some View {
-        NavigationStack{
-            
-            List(students){student in
-                NavigationLink(student.name){
-                    SingleStudentView()
-                }
+        List(students) { student in
+            NavigationLink(student.name) {
+                SingleStudentView(student: student)
             }
-            .navigationTitle(cohortName)
         }
+        .navigationTitle(cohortName)
     }
 }
 
 #Preview {
-    StudentPerfrmanceView(cohortName: "Cohort 1" , students: cohorts["Cohort 1"] ?? [])
+    StudentPerfrmanceView(
+        cohortName: "Cohort 1",
+        students: cohorts["Cohort 1"] ?? []
+    )
 }
+

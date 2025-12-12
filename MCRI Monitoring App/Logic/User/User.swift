@@ -13,12 +13,16 @@ struct User: Identifiable {
     var emailAdress: String
     var type: UserType
     
+    var criteria: [PerformaceCriteria] = []
+
+    
   
     init(name: String, password: String, emailAdress: String, type: UserType) {
         self.name = name
         self.password = password
         self.emailAdress = emailAdress
         self.type = type
+        self.criteria = getCriteria(criteria: type)
     }
 }
 

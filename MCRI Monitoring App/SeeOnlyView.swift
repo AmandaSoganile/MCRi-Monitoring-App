@@ -22,16 +22,32 @@ struct StatusCount: Identifiable {
 }
 
 struct SeeOnlyView: View {
-//    let student: User
+    var student: User
 
     var body: some View {
-        NavigationStack{
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-                .navigationTitle("Amelia")
+        List(student.criteria) { item in
+            HStack {
+                Text(item.activity)
+                Spacer()
+                Image(systemName: item.isDone ? "checkmark.square.fill" : "square")
+                    .foregroundColor(.blue)
+            }
         }
+        .navigationTitle(student.name)
     }
 }
 
 #Preview {
-//    SeeOnlyView(student:  )
+    var user = User(
+        name: "Preview Student",
+        password: "pass",
+        emailAdress: "preview@example.com",
+        type: .student
+    )
+    
+    user.criteria[0].isDone = true
+    user.criteria[3].isDone = true
+    
+    return SeeOnlyView(student: user)
 }
+
