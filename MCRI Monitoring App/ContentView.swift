@@ -116,7 +116,7 @@ struct DashboardView: View {
                                                 DashboardBlock(title: "Help Requests", icon: "person.fill.questionmark")
                                             }
                                         }
-                                        NavigationLink(destination: Goals()) {
+                                        NavigationLink(destination: GoalsView()) {
                                             DashboardBlock(title: "Goals", icon: "medal.fill")
                                         }
                                         NavigationLink(destination: CompletedMilestones()) {
@@ -222,7 +222,7 @@ struct KPIItem: View {
         .shadow(radius: 1)
     }
 }
-
-#Preview {
+#Preview{
     DashboardView()
 }
+
