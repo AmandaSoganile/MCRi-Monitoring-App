@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct message: View {
+struct MessageView: View {
     var body: some View {
         NavigationStack{
             VStack{
@@ -31,5 +31,5 @@ struct message: View {
 
 
 #Preview {
-    message()
+    MessageView()
 }
