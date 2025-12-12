@@ -26,7 +26,7 @@ struct DashboardView: View {
                         .ignoresSafeArea()
                         .overlay(
                             HStack {
-                                Text("Hello, Len !")
+                                Text("Hello")
                                     .font(.largeTitle.bold())
                                     .foregroundColor(.white)
                                     .padding(.leading, 18)
@@ -66,12 +66,12 @@ struct DashboardView: View {
                                     
                                     HStack(spacing: 20) {
                                         KPIItem(title: "Completed", value: "\(Int(progress * 100))%", icon: "checkmark.circle.fill", color: .green)
-                                        KPIItem(title: "Pending", value: "12", icon: "clock.fill", color: .orange)
+                                        KPIItem(title: "Pending", value: "0", icon: "clock.fill", color: .orange)
                                     }
                                     
                                     HStack(spacing: 20) {
-                                        KPIItem(title: "Overdue", value: "3", icon: "exclamationmark.circle.fill", color: .red)
-                                        KPIItem(title: "Total Reports", value: "50", icon: "doc.plaintext.fill", color: .blue)
+                                        KPIItem(title: "Overdue", value: "1", icon: "exclamationmark.circle.fill", color: .red)
+                                        KPIItem(title: "Total Reports", value: "2", icon: "doc.plaintext.fill", color: .blue)
                                     }
                                 }
                                 
