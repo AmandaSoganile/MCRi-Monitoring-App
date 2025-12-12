@@ -6,11 +6,12 @@
 //
 import SwiftUI
 
-struct User: Equatable{
+struct User: Equatable, Hashable{
     var name: String
     var password: String
     var emailAddress: String
     var type: UserType
+    var criteria: [PerformaceCriteria] = []
     
     init(name: String, password: String, emailAddress: String, type: UserType) {
         self.name = name
@@ -40,6 +41,8 @@ enum UserType: String, CaseIterable, Identifiable {
         }
     }
 }
+
+
 
 var users: [User] = [
     User(name: "Student", password: "admin", emailAddress: "stud@example.com", type: .student),
