@@ -107,7 +107,7 @@ struct DashboardView: View {
                                     .padding(.horizontal)
                                     LazyVGrid(columns: gridItems, spacing: 20) {
                                         if ["facilitator", "manager", "projectManager"].contains(userRole) {
-                                            NavigationLink(destination: UpdatesPage()) {
+                                            NavigationLink(destination: PickWeekManager()) {
                                                 DashboardBlock(title: "Updates", icon: "chart.bar.doc.horizontal")
                                             }
                                         }
