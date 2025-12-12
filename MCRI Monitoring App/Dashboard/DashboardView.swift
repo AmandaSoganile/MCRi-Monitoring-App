@@ -10,12 +10,12 @@ import SwiftUI
 struct DashboardView: View {
     @State private var progress: Double = 0.8
     @AppStorage("userRole") var userRole: String = "facilitator"
-
+    
     private let gridItems = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
-
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -30,9 +30,9 @@ struct DashboardView: View {
                                     .font(.largeTitle.bold())
                                     .foregroundColor(.white)
                                     .padding(.leading, 18)
-
+                                
                                 Spacer()
-
+                                
                                 NavigationLink(destination: NotificationsView()) {
                                     Image(systemName: "bell.fill")
                                         .font(.system(size: 25))
@@ -42,8 +42,8 @@ struct DashboardView: View {
                                         .clipShape(Circle())
                                 }
                                 .padding(.trailing, 8)
-
-                                NavigationLink(destination: ProfileView()) {
+                                
+                                NavigationLink(destination: Settings_page()) {
                                     Image(systemName: "gearshape.fill")
                                         .font(.system(size: 25))
                                         .foregroundColor(.white)
@@ -57,7 +57,7 @@ struct DashboardView: View {
                     Spacer()
                     ScrollView {
                         VStack(spacing: 25) {
-                           
+                            
                             // MARK: - KPIs Section
                             if ["facilitator", "manager", "projectManager"].contains(userRole) {
                                 VStack(alignment: .leading, spacing: 15) {
@@ -96,7 +96,7 @@ struct DashboardView: View {
                                     .frame(height: 540)
                                 
                                 VStack(spacing: 20) {
-                                    NavigationLink(destination: StudentsPerfomance()) {
+                                    NavigationLink(destination: CohortCategorieView()) {
                                         DashboardBlock(title: "Students Performance",
                                                        icon: "chart.line.uptrend.xyaxis")
                                         .frame(maxWidth: 450)
@@ -112,7 +112,7 @@ struct DashboardView: View {
                                             }
                                         }
                                         if ["student", "intern", "facilitator"].contains(userRole) {
-                                            NavigationLink(destination: HelpRequests()) {
+                                            NavigationLink(destination: ConversationsListView()) {
                                                 DashboardBlock(title: "Help Requests", icon: "person.fill.questionmark")
                                             }
                                         }
@@ -142,7 +142,7 @@ struct DashboardView: View {
                     Spacer()
                     HStack {
                         Spacer()
-                        NavigationLink(destination: CreateReport()) {
+                        NavigationLink(destination: managerUpdates()) {
                             Image(systemName: "square.and.pencil")
                                 .font(.system(size: 25))
                                 .foregroundColor(.white)
