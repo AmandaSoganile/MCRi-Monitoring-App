@@ -21,6 +21,11 @@
 			path = Goals;
 			sourceTree = "<group>";
 		};
+		E44C489B2EEBEC6600D27CF4 /* CompletedMilestones */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CompletedMilestones;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +44,7 @@
 			children = (
 				4D7C80A52EEAC890004B5B10 /* MCRI Monitoring App */,
 				E44C488E2EEBE77500D27CF4 /* Goals */,
+				E44C489B2EEBEC6600D27CF4 /* CompletedMilestones */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,6 +66,7 @@
 			fileSystemSynchronizedGroups = (
 				4D7C80A52EEAC890004B5B10 /* MCRI Monitoring App */,
 				E44C488E2EEBE77500D27CF4 /* Goals */,
+				E44C489B2EEBEC6600D27CF4 /* CompletedMilestones */,
 			);
 			name = "MCRI Monitoring App";
 			packageProductDependencies = (
