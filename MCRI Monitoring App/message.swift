@@ -16,7 +16,7 @@ struct message: View {
                     .padding()
                     .multilineTextAlignment(.center)
                 Spacer()
-                NavigationLink("Continue"){
+                NavigationLink("Continue"){LoginView()
                     
                 }
                 .padding()

@@ -6,26 +6,29 @@
 //
 import SwiftUI
 
-
-struct LoginView: View {
+struct RegisterView: View {
    
+    @State private var name = ""
     @State private var email = ""
     @State private var password = ""
     @State private var loginMessage = ""
     @State private var loggedInUser: User?
+    @State private var navigate = false   // Navigation trigger
     
-    
+    var users: [User]   // Pass your users array here
     
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             VStack(spacing: 20) {
                 Spacer()
+                
                 Text("Enter your details to proceed")
                     .font(.largeTitle)
                     .bold()
                 
-               
-               
+                TextField("Name", text: $name)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                
                 TextField("Email", text: $email)
                     .keyboardType(.emailAddress)
                     .textInputAutocapitalization(.never)
@@ -35,10 +38,11 @@ struct LoginView: View {
                 SecureField("Password", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 
+               
                 Button(action: {
-                    //login()
+                    registerUser()
                 }) {
-                    Text("Login")
+                    Text("Register")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.blue)
@@ -46,38 +50,43 @@ struct LoginView: View {
                         .cornerRadius(10)
                 }
                 
-                if !loginMessage.isEmpty {
-                    Text(loginMessage)
-                        .foregroundColor(.red)
+                // Show welcome message after registration
+                if let user = loggedInUser {
+                    Text("Welcome, \(name)!")
+                        .font(.headline)
                         .padding(.top, 10)
                 }
                 
-                // Display info when logged in
-                if let user = loggedInUser {
-                    VStack(spacing: 10) {
-                        Text("Welcome, \(user.name)!")
-                            .font(.headline)
-                        
-                    }
-                    .padding(.top, 20)
-                }
-                
                 Spacer()
+                
+                // Hidden NavigationLink (activated by the register button)
+                NavigationLink("", destination: LoginView(), isActive: $navigate)
+                    .hidden()
             }
             .padding()
-            NavigationLink("Next"){message()}
-                .padding()
-                .frame(width: 200)
-                .foregroundStyle(.white)
-                .fontWeight(.bold)
-                .background(Capsule().fill(Color.blue))
-                .cornerRadius(200)
-                
         }
     }
     
+    private func registerUser() {
+        guard !email.isEmpty && !password.isEmpty else {
+            loginMessage = "Please fill all fields."
+            return
+        }
+        
+        // Create new user
+        let newUser = User(name: email, password: password, emailAddress: email, type: .student)
+        loggedInUser = newUser
+        loginMessage = "Registration successful!"
+        
+        // Navigate to LoginView after a short delay to show welcome message
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            navigate = true
+        }
+    }
 }
 
+
+
 #Preview{
-    LoginView()
+    RegisterView(users: users)
 }

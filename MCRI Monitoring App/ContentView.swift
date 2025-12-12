@@ -17,7 +17,7 @@ struct Welcome: View {
                     .scaledToFit()
                     .frame(width: 600, height: 600)
                 Spacer()
-                NavigationLink("Next"){SignInView()
+                NavigationLink("Next"){message()
                 }
                 .padding()
                 .frame(width: 200)

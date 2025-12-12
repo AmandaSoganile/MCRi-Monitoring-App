@@ -49,8 +49,9 @@ var users: [User] = [
     User(name: "Donor", password: "admin", emailAddress: "don@example.com", type: .donor),
 ]
 
-struct SignInView: View {
+struct LoginView: View {
     @State private var selectedUserType: UserType = .student
+    @State private var name = ""
     @State private var email = ""
     @State private var password = ""
     @State private var errorMessage = ""
@@ -61,14 +62,13 @@ struct SignInView: View {
             VStack(spacing: 20) {
                 
                 // Hidden NavigationLink
-                NavigationLink("", destination: LoginView(), isActive: $navigate)
+                NavigationLink("", destination: RegisterView(), isActive: $navigate)
                     .hidden()
+Spacer()
+                Image("matter")
+                    .resizable()
 
-                Text("Matter")
-                    .font(.largeTitle)
-                    .bold()
-
-                Text("Sign in to continue")
+                Text("Log in to continue")
                     .foregroundColor(.gray)
 
                 // User type dropdown
@@ -81,12 +81,25 @@ struct SignInView: View {
                 .padding()
                 .background(Color.blue.opacity(0.15))
                 .cornerRadius(10)
+                
+                Text("Name")
+                    .font(.headline)
+                
+                
+                TextField("Name", text: $name)
+                    .textFieldStyle(.roundedBorder)
+                
+                Text("Email")
+                    .font(.headline)
 
                 TextField("Email", text: $email)
                     .keyboardType(.emailAddress)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled(true)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                
+                Text("Password")
+                    .font(.headline)
                 // Password
                 SecureField("Password", text: $password)
                     .textFieldStyle(.roundedBorder)
@@ -99,7 +112,16 @@ struct SignInView: View {
 
                 // Sign In Button
                 Button(action: signIn) {
-                    Text("Sign In")
+                    Text("Log In")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(formIsValid ? Color.blue : Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
+                }
+                
+                Button(action: signIn) {
+                    Text("Register")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(formIsValid ? Color.blue : Color.gray)
@@ -111,6 +133,7 @@ struct SignInView: View {
                 Spacer()
             }
             .padding()
+            
         }
     }
 
@@ -151,6 +174,6 @@ struct SignInView: View {
 }
 
 #Preview {
-   SignInView()
+   LoginView()
 }
 
