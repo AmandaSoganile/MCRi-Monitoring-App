@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct RegisterView: View {
-   
+    
     @State private var name = ""
     @State private var email = ""
     @State private var password = ""
@@ -38,7 +38,7 @@ struct RegisterView: View {
                 SecureField("Password", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 
-               
+                
                 Button(action: {
                     registerUser()
                 }) {
