@@ -1,16 +1,12 @@
 //
 //
-
 import SwiftUI
 import Combine
-
-
 
 enum GoalPriority: String, Codable, CaseIterable, Identifiable {
     case low = "Low"
     case medium = "Medium"
     case high = "High"
-
     var id: String { rawValue }
 }
 
@@ -36,85 +32,23 @@ struct Goal: Identifiable, Codable, Equatable {
     }
 }
 
-final class GoalsStore: ObservableObject {
-    @Published var goals: [Goal] = [] {
-        didSet { saveGoals() }
-    }
-
-    private let saveURL: URL = {
-        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        return dir.appendingPathComponent("goals.json")
-    }()
-
-    init() {
-        loadGoals()
-    }
-
-    func addGoal(
-        title: String,
-        details: String,
-        dueDate: Date?,
-        priority: GoalPriority
-    ) {
-        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmedTitle.isEmpty else { return }
-
-        let newGoal = Goal(
-            title: trimmedTitle,
-            details: details,
-            dueDate: dueDate,
-            priority: priority
-        )
-        goals.append(newGoal)
-    }
-
-    func deleteGoal(at offsets: IndexSet) {
-        goals.remove(atOffsets: offsets)
-    }
-
-    private func loadGoals() {
-        do {
-            let data = try Data(contentsOf: saveURL)
-            let decoded = try JSONDecoder().decode([Goal].self, from: data)
-            self.goals = decoded
-        } catch {
-            // First run or failed to decode; start empty
-            self.goals = []
-        }
-    }
-
-    private func saveGoals() {
-        do {
-            let data = try JSONEncoder().encode(goals)
-            try data.write(to: saveURL, options: [.atomic])
-        } catch {
-            // You might want to log errors in development
-        }
-    }
-
-    func updateGoal(_ goal: Goal) {
-        if let idx = goals.firstIndex(where: { $0.id == goal.id }) {
-            goals[idx] = goal
-        }
-    }
-}
-
-
-
-
 struct GoalsView: View {
-    @StateObject private var store = GoalsStore()
+
+    // persistent storage (AppStorage stores Data)
+    @AppStorage("savedGoals") private var savedGoalsData: Data = Data()
+
+    @State private var goals: [Goal] = []
     @State private var showingCreateGoal = false
     @State private var editingGoal: Goal? = nil
-    @State private var showingEditGoal = false
 
     var body: some View {
         ZStack {
-            if store.goals.isEmpty {
+            if goals.isEmpty {
                 VStack(spacing: 8) {
                     Text("No goals yet")
                         .font(.headline)
                         .foregroundColor(.secondary)
+
                     Text("Tap the + button to create your first goal.")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
@@ -123,10 +57,9 @@ struct GoalsView: View {
                 .padding()
             } else {
                 List {
-                    ForEach(store.goals) { goal in
+                    ForEach(goals) { goal in
                         Button {
                             editingGoal = goal
-                            showingEditGoal = true
                         } label: {
                             VStack(alignment: .leading, spacing: 4) {
                                 HStack {
@@ -145,7 +78,7 @@ struct GoalsView: View {
                                 }
 
                                 if let due = goal.dueDate {
-                                    Text("Due: \(due.formatted(date: .abbreviated, time: .omitted))")
+                                    Text("Due: \(formattedDate(due))")
                                         .font(.caption)
                                         .foregroundColor(.secondary)
                                 }
@@ -161,9 +94,11 @@ struct GoalsView: View {
                         }
                         .buttonStyle(PlainButtonStyle())
                     }
-                    .onDelete(perform: store.deleteGoal)
+                    .onDelete { indexSet in
+                        goals.remove(atOffsets: indexSet)
+                    }
                 }
-                .listStyle(InsetGroupedListStyle())
+                .listStyle(.insetGrouped)
             }
 
             // Floating +
@@ -187,24 +122,48 @@ struct GoalsView: View {
             }
         }
         .navigationTitle("Goals")
+
+        // load once on appear
+        .onAppear { loadGoalsIfNeeded() }
+
+        // save automatically when goals array changes
+        .onChange(of: goals) { _ in saveGoals() }
+
+        // create sheet
         .sheet(isPresented: $showingCreateGoal) {
             CreateGoalView { title, details, dueDate, priority in
-                store.addGoal(
-                    title: title,
-                    details: details,
-                    dueDate: dueDate,
-                    priority: priority
-                )
+                let newGoal = Goal(title: title, details: details, dueDate: dueDate, priority: priority)
+                goals.append(newGoal)
             }
         }
-        .sheet(isPresented: $showingEditGoal) {
-            if let goal = editingGoal {
-                EditGoalView(goal: goal) { updated in
-                    store.updateGoal(updated)
+
+        // edit sheet using item: so we avoid multiple simultaneous sheets
+        .sheet(item: $editingGoal) { goalToEdit in
+            EditGoalView(goal: goalToEdit) { updated in
+                if let index = goals.firstIndex(where: { $0.id == updated.id }) {
+                    goals[index] = updated
                 }
             }
         }
     }
+
+    // MARK: - Persistence helpers
+
+    private func saveGoals() {
+        if let encoded = try? JSONEncoder().encode(goals) {
+            savedGoalsData = encoded
+        }
+    }
+
+    private func loadGoalsIfNeeded() {
+        // load only if we haven't already loaded (safe for repeated appearances)
+        guard goals.isEmpty else { return }
+        if let decoded = try? JSONDecoder().decode([Goal].self, from: savedGoalsData) {
+            goals = decoded
+        }
+    }
+
+    // MARK: - utils
 
     private func priorityColor(_ priority: GoalPriority) -> Color {
         switch priority {
@@ -213,7 +172,17 @@ struct GoalsView: View {
         case .high: return .red
         }
     }
+
+    private func formattedDate(_ date: Date) -> String {
+        // safe, lightweight date formatting compatible with older iOS as well
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter.string(from: date)
+    }
 }
+
+// MARK: - Create & Edit Views (unchanged but adapted to item-sheet usage)
 
 struct CreateGoalView: View {
     @Environment(\.dismiss) private var dismiss
@@ -237,22 +206,14 @@ struct CreateGoalView: View {
                 Section(header: Text("Details / Notes")) {
                     TextEditor(text: $details)
                         .frame(minHeight: 120)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray.opacity(0.2))
-                        )
+                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.2)))
                         .padding(.vertical, 4)
                 }
 
                 Section(header: Text("Due Date")) {
                     Toggle("Set due date", isOn: $hasDueDate.animation())
-
                     if hasDueDate {
-                        DatePicker(
-                            "Due",
-                            selection: $dueDate,
-                            displayedComponents: .date
-                        )
+                        DatePicker("Due", selection: $dueDate, displayedComponents: .date)
                     }
                 }
 
@@ -269,16 +230,12 @@ struct CreateGoalView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
+                    Button("Cancel") { dismiss() }
                 }
-
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
                         let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
                         guard !trimmedTitle.isEmpty else { return }
-
                         let dateToSave = hasDueDate ? dueDate : nil
                         onSave(trimmedTitle, details, dateToSave, priority)
                         dismiss()
@@ -324,22 +281,14 @@ struct EditGoalView: View {
                 Section(header: Text("Details / Notes")) {
                     TextEditor(text: $details)
                         .frame(minHeight: 120)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray.opacity(0.2))
-                        )
+                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.2)))
                         .padding(.vertical, 4)
                 }
 
                 Section(header: Text("Due Date")) {
                     Toggle("Set due date", isOn: $hasDueDate.animation())
-
                     if hasDueDate {
-                        DatePicker(
-                            "Due",
-                            selection: $dueDate,
-                            displayedComponents: .date
-                        )
+                        DatePicker("Due", selection: $dueDate, displayedComponents: .date)
                     }
                 }
 
@@ -378,7 +327,9 @@ struct EditGoalView: View {
     }
 }
 
+// Preview
 #Preview {
-    GoalsView()
+    NavigationView {
+        GoalsView()
+    }
 }
-
