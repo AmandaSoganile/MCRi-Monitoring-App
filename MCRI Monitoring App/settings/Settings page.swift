@@ -10,7 +10,6 @@ import Combine
 
 class AppSettings: ObservableObject {
     @Published var isDarkModeEnabled: Bool = false
-    
 }
 
 struct Settings_page: View {
