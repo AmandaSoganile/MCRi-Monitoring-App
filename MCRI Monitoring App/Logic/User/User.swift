@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct User {
+struct User: Equatable{
     var name: String
     var password: String
     var emailAddress: String

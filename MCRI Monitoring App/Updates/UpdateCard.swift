@@ -76,14 +76,14 @@ struct UpdateCard: View {
         user: User(
             name: "Amanda",
             password: "",
-            emailAdress: "ama",
+            emailAddress: "ama",
             type: .student
         ),
         update: StudentUpdate(
             user: User(
                 name: "Amanda",
                 password: "",
-                emailAdress: "ama",
+                emailAddress: "ama",
                 type: .student
             ),
             weekEnding: Date(),

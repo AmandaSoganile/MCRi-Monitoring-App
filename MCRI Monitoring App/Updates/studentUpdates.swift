@@ -153,5 +153,5 @@ struct studentUpdates: View {
 }
 
 #Preview {
-    studentUpdates(user: User(name: "AMA", password: "123", emailAdress: "123@GMAIL", type: .student))
+    studentUpdates(user: User(name: "AMA", password: "123", emailAddress: "123@GMAIL", type: .student))
 }

@@ -101,7 +101,7 @@ struct managerUpdateCard: View {
 }
 
 #Preview {
-    managerUpdateCard(user: User(name: "Amanda", password: "", emailAdress: "ama", type: .student), report: ManagerWeeklyUpdate(
+    managerUpdateCard(user: User(name: "Amanda", password: "", emailAddress: "ama", type: .student), report: ManagerWeeklyUpdate(
         weekEnding: Date(),
         absentee: "Jessica",
         latecomer: "N/A",
