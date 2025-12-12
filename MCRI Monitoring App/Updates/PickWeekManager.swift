@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PickWeekManager: View {
-    var weeks = ["12/06/25", "22/06/25", "02/07/25", "13/07/25"]
+    var weeks = ["12/11/25", "18/11/25", "21/11/25", "27/11/25"]
     var body: some View {
         NavigationStack{
 //            Text(" All Updates")
@@ -20,7 +20,7 @@ struct PickWeekManager: View {
                     HorizontalWeekView(week: week)
                 }
             }
-            .listStyle(.inset)
+            .listStyle(.automatic)
                 
 
             }

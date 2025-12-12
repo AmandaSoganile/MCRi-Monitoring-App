@@ -14,20 +14,23 @@ struct CompletedMilestones: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Milestones")
-                    .font(.largeTitle)
-                    .fontWeight(.semibold)
-                    .padding(.top)
-
-                ScrollView {
-                    VStack(spacing: 20) {
-                        ForEach(milestones, id: \.self) { milestone in
-                            mileStoneCard(milestone: milestone)
+                    
+                    Text("Milestones")
+                        .font(.largeTitle)
+                        .fontWeight(.semibold)
+                        .padding(.top)
+                    
+                
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            ForEach(milestones, id: \.self) { milestone in
+                                mileStoneCard(milestone: milestone)
+                            }
                         }
+                        .padding()
                     }
-                    .padding()
                 }
-            }
+            
             .toolbar {
                 ToolbarItem(placement: .bottomBar) {
                     NavigationLink {
@@ -35,7 +38,7 @@ struct CompletedMilestones: View {
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .font(.system(size: 40))
-                            .tint(.black)
+                            .tint(.blue)
                             .shadow(radius: 10)
                     }
                 }

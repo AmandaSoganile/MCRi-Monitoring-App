@@ -13,7 +13,7 @@ struct PasswordPage: View {
     @State private var confirmPassword: String = ""
     var body: some View {
         Form {
-            Section(header: Text("Change Password").font(.largeTitle.bold())) {
+            Section(header: Text("Change Password").font(.largeTitle.bold()).foregroundStyle(.blue)) {
                 SecureField("Password", text: $password)
                     
                 SecureField("New Password", text: $securePassword)

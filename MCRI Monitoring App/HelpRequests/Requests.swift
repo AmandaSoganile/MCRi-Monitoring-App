@@ -22,7 +22,7 @@ struct Requests: View {
     @State private var permissionDenied: Bool = false
     @AppStorage("currentUserRole") private var currentUserRole: String = UserType.facilitator.rawValue
     
-    @State private var receiver: UserType = .facilitator
+    @State private var receiver: UserType = .manager
     
     @State private var messages: [Message] = []
 
@@ -41,7 +41,7 @@ struct Requests: View {
             Form {
                 Section(header: Text("Logged in: \(sender.rawValue.capitalized)")) {}
                 
-                Section(header: Text("Request Help").font(.largeTitle.bold())) {
+                Section(header: Text("Request Help").font(.largeTitle.bold()).foregroundStyle(.blue)) {
                     TextField("Issue...", text: $titleOfIssue)
                 }
                 

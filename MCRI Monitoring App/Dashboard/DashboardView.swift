@@ -17,7 +17,7 @@ struct DashboardView: View {
     ]
     
     var body: some View {
-        NavigationView {
+        NavigationStack{
             ZStack {
                 VStack{
                     Color.blue
@@ -105,6 +105,7 @@ struct DashboardView: View {
                                         .frame(height: 150)
                                     }
                                     .padding(.horizontal)
+                                    
                                     LazyVGrid(columns: gridItems, spacing: 20) {
                                         if ["facilitator", "manager", "projectManager"].contains(userRole) {
                                             NavigationLink(destination: PickWeekManager()) {
@@ -112,7 +113,7 @@ struct DashboardView: View {
                                             }
                                         }
                                         if ["student", "intern", "facilitator"].contains(userRole) {
-                                            NavigationLink(destination: ConversationsListView()) {
+                                            NavigationLink(destination: Requests()) {
                                                 DashboardBlock(title: "Help Requests", icon: "person.fill.questionmark")
                                             }
                                         }

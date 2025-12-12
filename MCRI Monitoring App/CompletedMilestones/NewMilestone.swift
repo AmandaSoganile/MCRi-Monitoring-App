@@ -69,7 +69,7 @@ struct newMilestone: View {
                         ZStack{
                             RoundedRectangle(cornerRadius: 10)
                                 .frame(width: 360, height: 70)
-                                .foregroundStyle(Color.black)
+                                .foregroundStyle(Color.blue)
                             
                             Text("Save")
                                 .font(.title2)

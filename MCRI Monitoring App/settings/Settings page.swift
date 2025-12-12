@@ -32,9 +32,11 @@ struct Settings_page: View {
                         Image(systemName: "gearshape")
                             .font(.largeTitle)
                             .fontWeight(.heavy)
+                            .foregroundStyle(.blue)
                         Text("Settings")
                             .font(.largeTitle)
                             .bold()
+                            .foregroundStyle(.blue)
                             .padding()
                     }
                     
@@ -43,6 +45,7 @@ struct Settings_page: View {
                             HStack {
                                 
                                 Image(systemName: "person")
+                                    .foregroundStyle(.blue)
                                 Text("Profile Details")
                             }
                         }
@@ -52,22 +55,27 @@ struct Settings_page: View {
                         NavigationLink(destination: PasswordPage())  {
                             HStack {
                                 Image(systemName: "lock.circle")
+                                    .foregroundStyle(.blue)
                                 Text("Password")
                             }
                         }
                         NavigationLink(destination: Notifications()) {
                             HStack {
                                 Image(systemName: "bell.circle")
+                                    .foregroundStyle(.blue)
                                 Text("Notifications")
                             }
                         }
                         HStack {
                             Image(systemName: "moon.circle")
+                                .foregroundStyle(.blue)
                             Toggle("Dark Mode", isOn: $isDarkModeEnabled)
                         }
+                        
                     }
                     Section("Help") {
                         NavigationLink(destination: AboutTheApp()) {
+                            
                             Text(" About The App")
                         }
                         
