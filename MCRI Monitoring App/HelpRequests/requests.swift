@@ -20,9 +20,9 @@ struct Requests: View {
     @State private var descriptionOfIssue: String = ""
     @State private var submitted: Bool = false
     @State private var permissionDenied: Bool = false
-    @AppStorage("currentUserRole") private var currentUserRole: String = UserType.facilitator.rawValue
+    @AppStorage("currentUserRole") private var currentUserRole: String = UserType.student.rawValue
     
-    @State private var receiver: UserType = .facilitator
+    @State private var receiver: UserType = .manager
     
     @State private var messages: [Message] = []
 
