@@ -120,7 +120,7 @@ struct DashboardView: View {
                                             DashboardBlock(title: "Goals", icon: "medal.fill")
                                         }
                                         NavigationLink(destination: CompletedMilestones()) {
-                                            DashboardBlock(title: "CompletedMilestones", icon: "trophy.fill")
+                                            DashboardBlock(title: "Milestones", icon: "trophy.fill")
                                             
                                         }
                                         
