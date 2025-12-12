@@ -7,18 +7,31 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct Welcome: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack{
+            VStack{
+                Spacer()
+                Image("matter")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 600, height: 600)
+                Spacer()
+                NavigationLink("Next"){SignInView()
+                }
+                .padding()
+                .frame(width: 200)
+                .foregroundStyle(.white)
+                .font(.largeTitle)
+                .background(Capsule().fill(Color.blue))
+                .cornerRadius(200)
+                
+                
+            }
         }
-        .padding()
     }
 }
 
 #Preview {
-    ContentView()
+    Welcome()
 }
