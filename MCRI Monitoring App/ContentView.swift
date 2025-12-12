@@ -2,36 +2,17 @@
 //  ContentView.swift
 //  MCRI Monitoring App
 //
-//  Created by Amanda Soganile on 11/12/2025.
+//  Created by Ron Harifiyati on 12/12/2025.
 //
 
 import SwiftUI
 
-struct Welcome: View {
+struct ContentView: View {
     var body: some View {
-        NavigationStack{
-            VStack{
-                Spacer()
-                Image("matter")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 600, height: 600)
-                Spacer()
-                NavigationLink("Next"){SignInView()
-                }
-                .padding()
-                .frame(width: 200)
-                .foregroundStyle(.white)
-                .font(.largeTitle)
-                .background(Capsule().fill(Color.blue))
-                .cornerRadius(200)
-                
-                
-            }
-        }
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
 #Preview {
-    Welcome()
+    ContentView()
 }
