@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DashboardView: View {
     @State private var progress: Double = 0.8
+    @AppStorage("userRole") var userRole: String = "facilitator"
 
     private let gridItems = [
         GridItem(.flexible()),
@@ -56,53 +57,32 @@ struct DashboardView: View {
                     Spacer() 
                     ScrollView {
                         VStack(spacing: 25) {
-                            // MARK: - Top overlay bar
-                            // Background bar
-                            
-                            
-                            
-                            //                            // MARK: - Progress Tracker
-                            //                            VStack(alignment: .leading, spacing: 10) {
-                            //                                Text("Complete Reports")
-                            //                                    .font(.title2.bold())
-                            //
-                            //                                ProgressView(value: progress)
-                            //                                    .progressViewStyle(.linear)
-                            //                                    .tint(.blue)
-                            //                                    .scaleEffect(x: 1, y: 2, anchor: .center)
-                            //
-                            //                                Text("\(Int(progress * 100))% Completed")
-                            //                                    .font(.subheadline)
-                            //                                    .foregroundColor(.gray)
-                            //                            }
-                            //                            .padding()
-                            //                            .background(Color(.secondarySystemBackground))
-                            //                            .cornerRadius(20)
-                            //                            .shadow(radius: 2)
-                            
+                           
                             // MARK: - KPIs Section
-                            VStack(alignment: .leading, spacing: 15) {
-                                Text("Key Performance Indicators")
-                                    .font(.title2.bold())
-                                
-                                HStack(spacing: 20) {
-                                    KPIItem(title: "Completed", value: "\(Int(progress * 100))%", icon: "checkmark.circle.fill", color: .green)
-                                    KPIItem(title: "Pending", value: "12", icon: "clock.fill", color: .orange)
+                            if ["facilitator", "manager", "projectManager"].contains(userRole) {
+                                VStack(alignment: .leading, spacing: 15) {
+                                    Text("Key Performance Indicators")
+                                        .font(.title2.bold())
+                                    
+                                    HStack(spacing: 20) {
+                                        KPIItem(title: "Completed", value: "\(Int(progress * 100))%", icon: "checkmark.circle.fill", color: .green)
+                                        KPIItem(title: "Pending", value: "12", icon: "clock.fill", color: .orange)
+                                    }
+                                    
+                                    HStack(spacing: 20) {
+                                        KPIItem(title: "Overdue", value: "3", icon: "exclamationmark.circle.fill", color: .red)
+                                        KPIItem(title: "Total Reports", value: "50", icon: "doc.plaintext.fill", color: .blue)
+                                    }
                                 }
                                 
-                                HStack(spacing: 20) {
-                                    KPIItem(title: "Overdue", value: "3", icon: "exclamationmark.circle.fill", color: .red)
-                                    KPIItem(title: "Total Reports", value: "50", icon: "doc.plaintext.fill", color: .blue)
-                                }
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color(.secondarySystemBackground))
+                                .cornerRadius(20)
+                                .shadow(radius: 2)
+                                .padding(.horizontal)
+                                
                             }
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color(.secondarySystemBackground))
-                            .cornerRadius(20)
-                            .shadow(radius: 2)
-                            .padding(.horizontal)
-                            
-                            
                             // MARK: - 4 Square Blocks
                             // FULL-WIDTH Students Performance block
                             ZStack(alignment: .top) {
@@ -126,17 +106,15 @@ struct DashboardView: View {
                                     }
                                     .padding(.horizontal)
                                     LazyVGrid(columns: gridItems, spacing: 20) {
-                                        //                                NavigationLink(destination: Text("")) {
-                                        //                                    DashboardBlock(title: "Students Perfomance", icon: "chart.line.uptrend.xyaxis")
-                                        //                                        .frame(maxWidth: .infinity)
-                                        //                                        .frame( height: 150)
-                                        //                                }
-                                        //                                .padding(.horizontal)
-                                        NavigationLink(destination: UpdatesPage()) {
-                                            DashboardBlock(title: "Updates", icon: "chart.bar.doc.horizontal")
+                                        if ["facilitator", "manager", "projectManager"].contains(userRole) {
+                                            NavigationLink(destination: UpdatesPage()) {
+                                                DashboardBlock(title: "Updates", icon: "chart.bar.doc.horizontal")
+                                            }
                                         }
-                                        NavigationLink(destination: HelpRequests()) {
-                                            DashboardBlock(title: "Help Requests", icon: "person.fill.questionmark")
+                                        if ["student", "intern", "facilitator"].contains(userRole) {
+                                            NavigationLink(destination: HelpRequests()) {
+                                                DashboardBlock(title: "Help Requests", icon: "person.fill.questionmark")
+                                            }
                                         }
                                         NavigationLink(destination: Goals()) {
                                             DashboardBlock(title: "Goals", icon: "medal.fill")
