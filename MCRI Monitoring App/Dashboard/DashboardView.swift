@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DashboardView: View {
     @State private var progress: Double = 0.8
-    @AppStorage("userRole") var userRole: String = "facilitator"
+    @AppStorage("userRole") var userRole: String = "student"
 
     private let gridItems = [
         GridItem(.flexible()),
