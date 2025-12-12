@@ -8,26 +8,30 @@
 import SwiftUI
 
 struct Welcome: View {
+    
+
     var body: some View {
         NavigationStack{
-            VStack{
-                Spacer()
-                Image("matter")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 600, height: 600)
-                Spacer()
-                NavigationLink("Next"){message()
+           
+                VStack{
+                    Spacer()
+                    Image("matter")
+                        .resizable()
+                        .scaledToFit()
+                        //.frame(width: 600, height: 600)
+                    Spacer()
+                    NavigationLink("Next"){message()
+                    }
+                    .padding()
+                    .frame(width: 200)
+                    .foregroundStyle(.white)
+                    .font(.title3.bold())
+                    .background(Capsule().fill(Color.blue))
+                    .cornerRadius(200)
+                    
+                    
                 }
-                .padding()
-                .frame(width: 200)
-                .foregroundStyle(.white)
-                .font(.largeTitle)
-                .background(Capsule().fill(Color.blue))
-                .cornerRadius(200)
-                
-                
-            }
+            
         }
     }
 }

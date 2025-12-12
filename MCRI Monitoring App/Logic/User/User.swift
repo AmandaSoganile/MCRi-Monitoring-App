@@ -48,132 +48,118 @@ var users: [User] = [
     User(name: "company", password: "admin", emailAddress: "comp@example.com", type: .company),
     User(name: "Donor", password: "admin", emailAddress: "don@example.com", type: .donor),
 ]
-
 struct LoginView: View {
-    @State private var selectedUserType: UserType = .student
+    let users: [User]
+    
     @State private var name = ""
     @State private var email = ""
     @State private var password = ""
     @State private var errorMessage = ""
-    @State private var navigate = false
+    @State private var navigateToDashboard = false
+    @State private var navigateToRegister = false
+    @State private var loggedInUser: User?
+    
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
+    @AppStorage("loggedInEmail") var loggedInEmail: String = ""
+    @AppStorage("currentUserEmail") var currentUserEmail: String = ""
 
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
                 
-                // Hidden NavigationLink
-                NavigationLink("", destination: RegisterView(), isActive: $navigate)
+                // HIDDEN NAVIGATION LINKS
+                NavigationLink("", destination: Dashboard(), isActive: $navigateToDashboard)
                     .hidden()
-Spacer()
+                
+                NavigationLink("", destination: RegisterView(users: users), isActive: $navigateToRegister)
+                    .hidden()
+                
+                // LOGO
                 Image("matter")
                     .resizable()
-
-                Text("Log in to continue")
-                    .foregroundColor(.gray)
-
-                // User type dropdown
-                Picker("Select User Type", selection: $selectedUserType) {
-                    ForEach(UserType.allCases, id: \.self) { type in
-                        Text(type.rawValue.capitalized).tag(type)
-                    }
+                    .scaledToFit()
+                    .frame(height: 130)
+                    .padding(.top, 20)
+                
+                Text("Login")
+                    .font(.largeTitle)
+                    .bold()
+                
+                // INPUT FIELDS
+                VStack(alignment: .leading, spacing: 18) {
+                    Text("Email")
+                    TextField("Email", text: $email)
+                        .keyboardType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled(true)
+                        .textFieldStyle(.roundedBorder)
+                    
+                    Text("Password")
+                    SecureField("Password", text: $password)
+                        .textFieldStyle(.roundedBorder)
                 }
-                .pickerStyle(.menu)
-                .padding()
-                .background(Color.blue.opacity(0.15))
-                .cornerRadius(10)
+                .padding(.top, 20)
                 
-                Text("Name")
-                    .font(.headline)
-                
-                
-                TextField("Name", text: $name)
-                    .textFieldStyle(.roundedBorder)
-                
-                Text("Email")
-                    .font(.headline)
-
-                TextField("Email", text: $email)
-                    .keyboardType(.emailAddress)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled(true)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                
-                Text("Password")
-                    .font(.headline)
-                // Password
-                SecureField("Password", text: $password)
-                    .textFieldStyle(.roundedBorder)
-
-                // Error
+                // ERROR MESSAGE
                 if !errorMessage.isEmpty {
                     Text(errorMessage)
                         .foregroundColor(.red)
-                }
-
-                // Sign In Button
-                Button(action: signIn) {
-                    Text("Log In")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(formIsValid ? Color.blue : Color.gray)
-                        .foregroundColor(.white)
-                        .cornerRadius(12)
+                        .padding(.top, 5)
                 }
                 
-                Button(action: signIn) {
-                    Text("Register")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(formIsValid ? Color.blue : Color.gray)
-                        .foregroundColor(.white)
-                        .cornerRadius(12)
+                // LOGIN BUTTON
+                Button("Login") {
+                    loginButtonTapped()
                 }
-                .disabled(!formIsValid)
-
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(12)
+                .padding(.top, 10)
+                
+                Text("If you don't have an account, register")
+                // REGISTER BUTTON
+                Button("Register") {
+                    navigateToRegister = true
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .foregroundStyle(.black)
+//                .background(Color.blue)
+//                .foregroundColor(.blue)
+//                .cornerRadius(12)
+                
                 Spacer()
             }
             .padding()
-            
         }
     }
-
-    // FORM VALIDATION
-    var formIsValid: Bool {
-        // Find user that matches email + selected role
-        guard let user = users.first(where: {
-            $0.emailAddress == email && $0.type == selectedUserType
-        }) else {
-            return false
-        }
-
-        // Password must be AT LEAST the required length
-        return password.count >= user.password.count
-    }
-
-
-
-    // SIGN IN
-    func signIn() {
-        // Look for user with matching email & type
-        guard let user = users.first(where: {
-            $0.emailAddress == email && $0.type == selectedUserType
-        }) else {
-            errorMessage = "Email does not match selected user type."
+    
+    
+    // LOGIN LOGIC (EMAIL + PASSWORD ONLY)
+    private func loginButtonTapped() {
+        guard let user = users.first(where: { $0.emailAddress == email }) else {
+            errorMessage = "Email not found."
             return
         }
 
-        // Check password
         guard user.password == password else {
             errorMessage = "Incorrect password."
             return
         }
 
-        errorMessage = ""
-        navigate = true
+        // Save the logged in user email (default user)
+        currentUserEmail = user.emailAddress
+
+        isLoggedIn = true
+        navigateToDashboard = true
     }
+
 }
 
 #Preview {
-   LoginView()
+    LoginView(users: users)
 }
 
