@@ -16,6 +16,7 @@ struct studentUpdates: View {
     @State private var studAchievement: String = ""
     @State private var blocker: String = ""
     @State private var selectedWeek: Date = Date()
+    @Environment(\.dismiss) var dismiss
     
     let chapters = [1, 2, 3, 4, 5, 6]
     let units = [1, 2, 3, 4, 5, 6, 7]
@@ -131,6 +132,7 @@ struct studentUpdates: View {
             Button(action: {
                 let studentReport = StudentUpdate(user: user, weekEnding: selectedWeek, attendance: Int(attendance) ?? 5, bookProgress: bookProgress(book: selectedBook, chapter: chapter, unit: unit), boldVoiceScore: Int(bVScore) ?? 50, studentAchievement: studAchievement, additionalHelp: blocker)
                 studentReports.append(studentReport)
+                dismiss()
             })
             {
                 ZStack{

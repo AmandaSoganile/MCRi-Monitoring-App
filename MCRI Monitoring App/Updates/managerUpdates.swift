@@ -23,6 +23,7 @@ struct managerUpdates: View {
     @State private var bVScore: String = ""
     
     @State private var selectedWeek: Date = Date()
+    @Environment(\.dismiss) var dismiss
     
     let chapters = [1, 2, 3, 4, 5, 6]
     let units = [1, 2, 3, 4, 5, 6, 7]
@@ -171,6 +172,7 @@ struct managerUpdates: View {
                     upcomingEvents: upcomingDates
                 )
                 managerReports.append(report)
+                dismiss()
             })
             {
                 

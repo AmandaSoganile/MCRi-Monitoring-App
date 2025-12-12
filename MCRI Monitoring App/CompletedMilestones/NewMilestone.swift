@@ -13,6 +13,7 @@ struct newMilestone: View {
     @State private var dateCompleted: Date = Date()
     @State private var timeTaken = ""
     @State private var details = ""
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         Text("Create New Milestone")
@@ -64,6 +65,7 @@ struct newMilestone: View {
         Button(action: {
                        let newMileStone = MileStone(name: nameOfMilestone, completedOn: dateCompleted, timeTaken: timeTaken, details: details)
                         milestonesn.append(newMileStone)
+            dismiss()
                     })
                     {
                         ZStack{

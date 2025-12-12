@@ -7,34 +7,34 @@
 
 var cohorts: [String: [User]] = [
     "Cohort 1": [
-    User(name: "Student 1", password: "password", emailAddress: "student@example.com", type: .intern),
-    User(name: "Student 2", password: "password", emailAddress: "student@example.com", type: .student),
-    User(name: "Student 3", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Tendai", password: "password", emailAddress: "student@example.com", type: .intern),
+    User(name: "Terrence", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Marvellous", password: "password", emailAddress: "student@example.com", type: .student),
     ],
     "Cohort 2": [
-    User(name: "Student 4", password: "password", emailAddress: "student@example.com", type: .student),
-    User(name: "Student 5", password: "password", emailAddress: "student@example.com", type: .student),
-    User(name: "Student 6", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Colleen", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Muzi", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Takue", password: "password", emailAddress: "student@example.com", type: .student),
     ],
     "Cohort 3": [
-    User(name: "Student 7", password: "password", emailAddress: "student@example.com", type: .student),
-    User(name: "Student 8", password: "password", emailAddress: "student@example.com", type: .student),
-    User(name: "Student 9", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Albertina", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Anita", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Victo-Jorge", password: "password", emailAddress: "student@example.com", type: .student),
     ],
     "Cohort 4": [
-    User(name: "Student 10", password: "password", emailAddress: "student@example.com", type: .student),
-    User(name: "Student 11", password: "password", emailAddress: "student@example.com", type: .student),
-    User(name: "Student 12", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Tana", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Ron", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Naishe", password: "password", emailAddress: "student@example.com", type: .student),
     ],
     "Cohort 5": [
-    User(name: "Student 13", password: "password", emailAddress: "student@example.com", type: .student),
-    User(name: "Student 14", password: "password", emailAddress: "student@example.com", type: .student),
-    User(name: "Student 15", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Boity", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Crown", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Lucile", password: "password", emailAddress: "student@example.com", type: .student),
     ],
     "Cohort 6": [
-    User(name: "Student 16", password: "password", emailAddress: "student@example.com", type: .student),
-    User(name: "Student 17", password: "password", emailAddress: "student@example.com", type: .student),
-    User(name: "Student 18", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Prosperity", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Wadzi", password: "password", emailAddress: "student@example.com", type: .student),
+    User(name: "Amanda", password: "password", emailAddress: "student@example.com", type: .student),
     ]
 ]
 

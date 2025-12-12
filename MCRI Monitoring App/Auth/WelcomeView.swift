@@ -57,7 +57,7 @@ struct WelcomeView: View {
                         
                         // Navigation to LoginView
                         if page == 3 {
-                            NavigationLink(destination: LoginView()) {
+                            NavigationLink(destination: LoginView(users: users)) {
                                 Text("Get Started")
                                     .foregroundColor(.blue)
                                     .padding(.vertical, 12)
