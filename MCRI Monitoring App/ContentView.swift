@@ -2,20 +2,14 @@
 //  ContentView.swift
 //  MCRI Monitoring App
 //
-//  Created by Amanda Soganile on 11/12/2025.
+//  Created by Ron Harifiyati on 12/12/2025.
 //
 
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        WelcomeView()
     }
 }
 

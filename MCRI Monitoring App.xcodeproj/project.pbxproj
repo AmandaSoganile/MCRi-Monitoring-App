@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		4D7C80A32EEAC890004B5B10 /* MCRI Monitoring App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MCRI Monitoring App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D7C80A32EEAC890004B5B10 /* MCRI Monitoring App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "MCRI Monitoring App.app"; path = "/Users/Ron/Documents/Heckathon/MCRi-Monitoring-App/build/Debug-iphoneos/MCRI Monitoring App.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -33,16 +33,7 @@
 			isa = PBXGroup;
 			children = (
 				4D7C80A52EEAC890004B5B10 /* MCRI Monitoring App */,
-				4D7C80A42EEAC890004B5B10 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		4D7C80A42EEAC890004B5B10 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4D7C80A32EEAC890004B5B10 /* MCRI Monitoring App.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -95,7 +86,7 @@
 			mainGroup = 4D7C809A2EEAC890004B5B10;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 4D7C80A42EEAC890004B5B10 /* Products */;
+			productRefGroup = 4D7C809A2EEAC890004B5B10;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
